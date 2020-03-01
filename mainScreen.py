@@ -1,4 +1,5 @@
 import pygame
+import Сonstants
 
 class MainScreen:
     myfont = None
@@ -32,7 +33,7 @@ class MainScreen:
         self.screenTitlePosition = (self.middleX - self.screenTitle.get_size()[0] / 2, 5)
 
     def draw(self, eventsList):
-        returnValue = 0
+        returnValue = Сonstants.NO_ACTION
 
         for currentEvent in eventsList:
             if currentEvent.type == self.pygameLib.KEYDOWN:
@@ -40,6 +41,11 @@ class MainScreen:
                     self.selectedIndex = min(1, self.selectedIndex + 1)
                 elif currentEvent.key == self.pygameLib.K_UP:
                     self.selectedIndex = max(0, self.selectedIndex - 1)
+                elif currentEvent.key == self.pygameLib.K_RETURN:
+                    if self.selectedIndex == 0:
+                        returnValue = Сonstants.GAME_SCREEN_ID
+                    elif self.selectedIndex == 1:
+                        returnValue = Сonstants.EXIT_GAME
 
         if (self.selectedIndex == 0):
             self.startLabel = self.myfont.render('Start Game', False, self.selectedColor)

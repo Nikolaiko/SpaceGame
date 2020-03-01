@@ -1,4 +1,6 @@
 import pygame
+import Сonstants
+
 from mainScreen import MainScreen
 from gameScreen import GameScreen
 from endGameScreen import EndScreen
@@ -26,12 +28,14 @@ while gameIsOn == True:
     screenSurface.fill(BACKGROUND_COLOR)
 
     drawResult = currentScreen.draw(systemEvents)
-    if drawResult == 1:
+    if drawResult == Сonstants.MAIN_SCREEN:
         currentScreen = MainScreen(pygame, screenSurface)
-    elif drawResult == 2:
+    elif drawResult == Сonstants.GAME_SCREEN_ID:
         currentScreen = GameScreen(pygame, screenSurface)
     elif drawResult == 3:
         currentScreen = EndScreen(pygame, screenSurface)
+    elif drawResult == Сonstants.EXIT_GAME:
+        gameIsOn = False
 
     pygame.display.flip()
     clock.tick(60)
