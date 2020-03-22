@@ -1,6 +1,8 @@
 import pygame
 import Сonstants
+
 from spaceship import Spaceship
+from bullet import Bullet
 
 class GameScreen:
     myfont = None
@@ -9,6 +11,7 @@ class GameScreen:
     window = None
     screenSize = None
     gameHero = None
+    allBullets = []
 
     def __init__(self, pygameInstance, windowScreen):
         self.pygameLib = pygameInstance
@@ -37,8 +40,25 @@ class GameScreen:
         elif self. gameHero.x < 0:
             self.gameHero.x = 0
 
+        for currentEvent in eventsList:
+            if currentEvent.type == pygame.KEYDOWN:
+                if currentEvent.key == pygame.K_SPACE:
+                    newBullet = Bullet()
+                    newBullet.x = self.gameHero.x + (self.gameHero.imageWidth / 2) - (newBullet.width / 2)
+                    newBullet.y = self.gameHero.y - newBullet.heigth
+                    newBullet.image = pygame.image.load(newBullet.imagePath)
+                    self.allBullets.append(newBullet)
+
+        for currentBullet in self.allBullets:
+            currentBullet.y = currentBullet.y - currentBullet.speed
+
+        conditions = filter(lambda bullet : bullet.y > -bullet.heigth, self.allBullets)
+        self.allBullets = list(conditions)
 
         self.window.blit(self.screenTitle, (0, 0))
         self.window.blit(self.gameHero.image, (self.gameHero.x, self.gameHero.y))
+        for currentBullet in self.allBullets:
+            self.window.blit(currentBullet.image, (currentBullet.x, currentBullet.y))
+
 
         return returnValue
