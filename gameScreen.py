@@ -3,6 +3,7 @@ import Сonstants
 
 from spaceship import Spaceship
 from bullet import Bullet
+from enemyShip import EnemyShip
 
 class GameScreen:
     myfont = None
@@ -12,6 +13,7 @@ class GameScreen:
     screenSize = None
     gameHero = None
     allBullets = []
+    enemyShips = []
 
     def __init__(self, pygameInstance, windowScreen):
         self.pygameLib = pygameInstance
@@ -25,6 +27,13 @@ class GameScreen:
         self.gameHero.image = pygame.image.load(self.gameHero.imagePath).convert_alpha()
         self.gameHero.x = (self.screenSize[0] / 2) - (self.gameHero.imageWidth / 2)
         self.gameHero.y = self.screenSize[1] - self.gameHero.imageHeight
+
+        for i in range(0, 3):
+            enemy = EnemyShip()
+            enemy.image = pygame.image.load(enemy.imagePath).convert_alpha()
+            enemy.x = (enemy.imageWidth * i) + 5
+            enemy.y = 50
+            self.enemyShips.append(enemy)
 
     def draw(self, eventsList):
         returnValue = Сonstants.NO_ACTION
@@ -60,5 +69,20 @@ class GameScreen:
         for currentBullet in self.allBullets:
             self.window.blit(currentBullet.image, (currentBullet.x, currentBullet.y))
 
+
+        lastEnemy = self.enemyShips[-1]
+        firstEnemy = self.enemyShips[0]
+        needToReverse = False
+        if (lastEnemy.x + lastEnemy.imageWidth + lastEnemy.speed >= self.screenSize[0] or
+            firstEnemy.x + lastEnemy.speed <= 0):
+            needToReverse = True
+
+
+        for currentEnemy in self.enemyShips:
+            if (needToReverse):
+                currentEnemy.reverse()
+
+            currentEnemy.move()
+            self.window.blit(currentEnemy.image, (currentEnemy.x, currentEnemy.y))
 
         return returnValue
