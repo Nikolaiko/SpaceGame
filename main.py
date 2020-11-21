@@ -32,7 +32,7 @@ while gameIsOn == True:
         currentScreen = MainScreen(pygame, screenSurface)
     elif drawResult == Сonstants.GAME_SCREEN_ID:
         currentScreen = GameScreen(pygame, screenSurface)
-    elif drawResult == 3:
+    elif drawResult == Сonstants.END_SCREEN:
         currentScreen = EndScreen(pygame, screenSurface)
     elif drawResult == Сonstants.EXIT_GAME:
         gameIsOn = False

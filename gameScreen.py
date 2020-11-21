@@ -85,4 +85,31 @@ class GameScreen:
             currentEnemy.move()
             self.window.blit(currentEnemy.image, (currentEnemy.x, currentEnemy.y))
 
+
+        bulletsToRemove = []
+        enemiesToRemove = []
+        for currentBullet in self.allBullets:
+            for currentEnemy in self.enemyShips:
+                enemyRect = currentEnemy.image.get_rect()
+                bulletRect = currentBullet.image.get_rect()
+
+                bulletRect.x = currentBullet.x
+                bulletRect.y = currentBullet.y
+
+                enemyRect.x = currentEnemy.x
+                enemyRect.y = currentEnemy.y
+
+                #print(currentEnemy.image.get_rect())
+                hit = bulletRect.colliderect(enemyRect)
+                if (hit):
+                    bulletsToRemove.append(currentBullet)
+                    enemiesToRemove.append(currentEnemy)
+                    break
+
+        self.allBullets = [x for x in self.allBullets if x not in bulletsToRemove]
+        self.enemyShips = [x for x in self.enemyShips if x not in enemiesToRemove]
+
+        if (len(self.enemyShips) == 0):
+            returnValue = Сonstants.END_SCREEN
+
         return returnValue

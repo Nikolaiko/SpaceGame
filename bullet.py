@@ -1,6 +1,6 @@
 class Bullet:
     imagePath = "bullet.png"
-    bulletImage = None
+    image = None
     x = 0
     y = 0
     speed = 3

@@ -1,4 +1,5 @@
 import pygame
+import Сonstants
 
 class EndScreen:
     myfont = None
@@ -20,10 +21,7 @@ class EndScreen:
 
         for currentEvent in eventsList:
             if currentEvent.type == self.pygameLib.KEYDOWN:
-                if currentEvent.key == self.pygameLib.K_LEFT:
-                    returnValue = 2
-                elif currentEvent.key == self.pygameLib.K_RIGHT:
-                    returnValue = 1
+                returnValue = Сonstants.EXIT_GAME
 
         self.window.blit(self.screenTitle, (0, 0))
 
